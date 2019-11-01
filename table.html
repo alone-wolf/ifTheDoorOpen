@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        table
+    </title>
+    <meta charset="utf8">
+    <script src='./jquery.min.js'></script>
+</head>
+
+<body>
+    <table border="1px">
+        <tr>
+            <td>
+                close the door
+            </td>
+            <td><button id='turnOff_btn'>close the door</button></td>
+        </tr>
+        <tr>
+            <td>
+                open the door
+            </td>
+            <td><button id='turnOn_btn'>open the door</button></td>
+        </tr>
+        <tr>
+            <td>
+                get status
+            </td>
+            <td><button id='getStatus_btn'>get the status</button></td>
+        </tr>
+        <tr>
+            <td>door status</td>
+            <td>
+                <h4 id='status'>status here</h4>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var doorStatus=0;
+
+        $('#turnOff_btn').click(function () {
+            $.get('ctrler.php/turnOff', {}, function (data, status) {
+                if(data=='0'){
+                    displayString('door is closed');
+                }
+            });
+        });
+
+        $('#turnOn_btn').click(function () {
+            $.get('ctrler.php/turnOn', {}, function (data, status) {
+                if(data=='1'){
+                    displayString('door is open');
+                }
+            });
+        })
+
+        $('#getStatus_btn').click(function () {
+            $.get('ctrler.php/s', {}, function (data, status) {
+                if(data=='1'){
+                    displayString('door is open');
+                }else{
+                    displayString('door is closed');
+                }
+            });
+        });
+
+        function displayString(str) {
+            $('#status').text(str);
+        }
+
+        $.get('ctrler.php/s', {}, function (data, status) {
+                if(data=='1'){
+                    displayString('door is open');
+                }else{
+                    displayString('door is closed');
+                }
+            });
+
+        
+
+    </script>
+</body>
+
+</html>
