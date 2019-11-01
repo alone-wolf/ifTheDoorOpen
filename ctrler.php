@@ -20,6 +20,7 @@ $operate=$routePath[1];
 
 $allowedOperateArray1=array(
     'turnon',
+    'turnOn',
     'on',
     'On',
     'opened',
@@ -27,6 +28,7 @@ $allowedOperateArray1=array(
 );
 $allowedOperateArray0=array(
     'turnoff',
+    'turnOff',
     'off',
     'Off',
     'closed',
@@ -39,6 +41,9 @@ $allowedOperateArray_1=array(
     'getStatus',
     's',
     'S'
+);
+$allowedOperateArray_2=array(
+    'switch'
 );
 
 switch($operate){
@@ -55,6 +60,13 @@ switch($operate){
     case in_array($operate,$allowedOperateArray_1):{
         $debug->printd('getStatus');
         echo(getStatusFromFile());
+        break;
+    }
+    case in_array($operate,$allowedOperateArray_2):{
+        $debug->printd('switchStatus');
+        $echoStr=NULL;
+        getStatusFromFile()=='1'?$echoStr=putDataToFile('0'):$echoStr=putDataToFile('1');
+        echo($echoStr);
         break;
     }
     default:{

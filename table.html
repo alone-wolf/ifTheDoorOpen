@@ -7,6 +7,11 @@
     </title>
     <meta charset="utf8">
     <script src='./jquery.min.js'></script>
+    <style>
+        td {
+            width:200px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,9 +30,15 @@
         </tr>
         <tr>
             <td>
+                switch status
+            </td>
+            <td><button id='switch_btn'>switch status</button></td>
+        </tr>
+        <tr>
+            <td>
                 get status
             </td>
-            <td><button id='getStatus_btn'>get the status</button></td>
+            <td><button id='getStatus_btn'>get status</button></td>
         </tr>
         <tr>
             <td>door status</td>
@@ -37,11 +48,13 @@
         </tr>
     </table>
     <script>
-        var doorStatus=0;
+        var doorStatus = 0;
+        var debugStatus = 1;
 
         $('#turnOff_btn').click(function () {
             $.get('ctrler.php/turnOff', {}, function (data, status) {
-                if(data=='0'){
+                logd('turnOff','data>'+data+' '+'status>'+status);
+                if (data == '0') {
                     displayString('door is closed');
                 }
             });
@@ -49,7 +62,8 @@
 
         $('#turnOn_btn').click(function () {
             $.get('ctrler.php/turnOn', {}, function (data, status) {
-                if(data=='1'){
+                logd('turnOn','data>'+data+' '+'status>'+status);
+                if (data == '1') {
                     displayString('door is open');
                 }
             });
@@ -57,9 +71,21 @@
 
         $('#getStatus_btn').click(function () {
             $.get('ctrler.php/s', {}, function (data, status) {
-                if(data=='1'){
+                logd('getStatus','data>'+data+' '+'status>'+status);
+                if (data == '1') {
                     displayString('door is open');
-                }else{
+                } else {
+                    displayString('door is closed');
+                }
+            });
+        });
+
+        $('#switch_btn').click(function(){
+            $.get('ctrler.php/switch', {}, function (data, status) {
+                logd('switchStatus','data>'+data+' '+'status>'+status);
+                if (data == '1') {
+                    displayString('door is open');
+                } else {
                     displayString('door is closed');
                 }
             });
@@ -70,14 +96,18 @@
         }
 
         $.get('ctrler.php/s', {}, function (data, status) {
-                if(data=='1'){
-                    displayString('door is open');
-                }else{
-                    displayString('door is closed');
-                }
-            });
+            logd('initGetStatus','data>'+data+' '+'status>'+status);
+            if (data == '1') {
+                displayString('door is open');
+            } else {
+                displayString('door is closed');
+            }
+        });
 
-        
+        function logd(TAG,str){
+            console.log(TAG+': '+str);
+        }
+
 
     </script>
 </body>
