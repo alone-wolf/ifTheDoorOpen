@@ -48,45 +48,51 @@
         </tr>
     </table>
     <script>
+        $(document).ready(function(){
+
+        });
         var doorStatus = 0;
-        var debugStatus = 1;
+        var debugStatus = 0;
+        var phpPage='ctrler.php/';
+        var strOpen='door is open';
+        var srtClosed='door is closed';
 
         $('#turnOff_btn').click(function () {
-            $.get('ctrler.php/turnOff', {}, function (data, status) {
+            $.get(phpPage+'turnOff', {}, function (data, status) {
                 logd('turnOff','data>'+data+' '+'status>'+status);
                 if (data == '0') {
-                    displayString('door is closed');
+                    displayString(srtClosed);
                 }
             });
         });
 
         $('#turnOn_btn').click(function () {
-            $.get('ctrler.php/turnOn', {}, function (data, status) {
+            $.get(phpPage+'turnOn', {}, function (data, status) {
                 logd('turnOn','data>'+data+' '+'status>'+status);
                 if (data == '1') {
-                    displayString('door is open');
+                    displayString(strOpen);
                 }
             });
         })
 
         $('#getStatus_btn').click(function () {
-            $.get('ctrler.php/s', {}, function (data, status) {
+            $.get(phpPage+'s', {}, function (data, status) {
                 logd('getStatus','data>'+data+' '+'status>'+status);
                 if (data == '1') {
-                    displayString('door is open');
+                    displayString(strOpen);
                 } else {
-                    displayString('door is closed');
+                    displayString(srtClosed);
                 }
             });
         });
 
         $('#switch_btn').click(function(){
-            $.get('ctrler.php/switch', {}, function (data, status) {
+            $.get(phpPage+'switch', {}, function (data, status) {
                 logd('switchStatus','data>'+data+' '+'status>'+status);
                 if (data == '1') {
-                    displayString('door is open');
+                    displayString(strOpen);
                 } else {
-                    displayString('door is closed');
+                    displayString(srtClosed);
                 }
             });
         });
@@ -95,17 +101,19 @@
             $('#status').text(str);
         }
 
-        $.get('ctrler.php/s', {}, function (data, status) {
+        $.get(phpPage+'s', {}, function (data, status) {
             logd('initGetStatus','data>'+data+' '+'status>'+status);
             if (data == '1') {
-                displayString('door is open');
+                displayString(strOpen);
             } else {
-                displayString('door is closed');
+                displayString(srtClosed);
             }
         });
 
         function logd(TAG,str){
-            console.log(TAG+': '+str);
+            if(debugStatus==1){
+                console.log(TAG+': '+str);
+            }
         }
 
 
