@@ -87,6 +87,16 @@ function getStatusFromFile(){
     }
 }
 
+function checkin($open_close){
+    $time = getTime();
+}
+
+function getTime($format='Y-m-d H:i:s'){
+    date_default_timezone_set('UTC');
+    $datetime = new DateTime();
+    return $datetime->format($format);
+}
+
 class FileCtrl{
     private $filePath;
     private $file;
