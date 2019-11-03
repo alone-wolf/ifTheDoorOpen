@@ -1,4 +1,5 @@
 <?php
+require './RouterCtrl.php';
 
 $debug = new Debug;
 
@@ -8,61 +9,56 @@ if($_SERVER["SCRIPT_NAME"]==$_SERVER["REQUEST_URI"]){
     print('error: wrong url used');
     exit(-1);
 }
-$routePath=explode($_SERVER["SCRIPT_NAME"],$_SERVER["REQUEST_URI"]);
-$routePath=$routePath[1];
-$routePath=explode('/',$routePath);
-if(sizeof($routePath)!=2){
-    print('error: wrong number of args');
-    exit(-1);
-}
-// print_r($routePath);
+$routePath=new RouterCtrl.resolvePouter(1);
 $operate=$routePath[1];
 
-$allowedOperateArray1=array(
-    'turnon',
+$allowedOperateArray=array(
+    'turnOn'=>array(
+        'turnon',
     'turnOn',
     'on',
     'On',
     'opened',
     '1'
-);
-$allowedOperateArray0=array(
-    'turnoff',
+    ),
+    'turnOff'=>array(
+        'turnoff',
     'turnOff',
     'off',
     'Off',
     'closed',
     '0'
-);
-$allowedOperateArray_1=array(
-    'get',
+    )
+    'getStatus'=>array(
+        'get',
     '-1',
     'status',
     'getStatus',
     's',
     'S'
-);
-$allowedOperateArray_2=array(
-    'switch'
+    ),
+    'switchStatus'=>array(
+        'switch'
+    )
 );
 
 switch($operate){
-    case in_array($operate,$allowedOperateArray1):{
+    case in_array($operate,$allowedOperateArray['turnOn']):{
         $debug->printd('turnOn');
         echo(putDataToFile('1'));
         break;
     }
-    case in_array($operate,$allowedOperateArray0):{
+    case in_array($operate,$allowedOperateArray['turnOff']):{
         $debug->printd('turnOff');
         echo(putDataToFile('0'));
         break;
     }
-    case in_array($operate,$allowedOperateArray_1):{
+    case in_array($operate,$allowedOperateArray['getStatus']):{
         $debug->printd('getStatus');
         echo(getStatusFromFile());
         break;
     }
-    case in_array($operate,$allowedOperateArray_2):{
+    case in_array($operate,$allowedOperateArray['switchStatus']):{
         $debug->printd('switchStatus');
         $echoStr=NULL;
         getStatusFromFile()=='1'?$echoStr=putDataToFile('0'):$echoStr=putDataToFile('1');
@@ -89,45 +85,12 @@ function getStatusFromFile(){
 
 function checkin($open_close){
     $time = getTime();
-}
-
-function getTime($format='Y-m-d H:i:s'){
-    date_default_timezone_set('UTC');
-    $datetime = new DateTime();
-    return $datetime->format($format);
-}
-
-class FileCtrl{
-    private $filePath;
-    private $file;
-    public function setFilePath($filePath){
-        $this->filePath=$filePath;
-    }
-    public function getFilePath(){
-        return $this->filePath;
-    }
-    public function openFileRead(){
-        $this->file=fopen($this->getFilePath(),'r');
-        flock($this->getFile(),LOCK_SH);
-    }
-    public function getFile(){
-        return $this->file;
-    }
-    public function openFileWrite(){
-        $this->file=fopen($this->getFilePath,'w');
-    }
-
-    public function __destruct(){
-        fclose($this->getFile());
-    }
+    $status=$open_close;
 
 }
 
-class Debug{
-    private $debugStatus=0;
-    public function printd($str){
-        if($this->debugStatus){
-            print($str.'<br>');
-        }
-    }
-}
+
+
+
+
+
