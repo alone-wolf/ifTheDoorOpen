@@ -26,26 +26,36 @@ class RouterCtrl
         $this->setSCRIPTNAME($SCRIPT_NAME);
         $this->setREQUESTURI($REQUEST_URI);
     }
-    public function resolveRouter($routerLimit = 0)
+    public function resolveRouter($routerLimit = NULL)
     {
         $routePath = explode($this->getSCRIPTNAME(), $this->getREQUESTURI());
         $routePath = $routePath[1];
         $routePath = explode('/', $routePath);
-        print_r(sizeof($routePath));
-        //array_shift($routePath);
-        if ($routerLimit == 0) {
-            return $routePath;
-        } else {
-            if (sizeof($routePath != $routerLimit)) {
-                echo ('error: wrong number of args');
-                return '-1';
-            }
+        $routePath = array_diff($routePath,['']);
+
+        //ensure the routerLimit less than the sizeof(routerPath)
+        $routerLimit<sizeof($routePath)?$routerLimit=$routerLimit:$routerLimit=sizeof($routePath);
+        //echo($routerLimit);
+        //array_shift($routePath);//used to del the blank head of the array, but we can del it with array_diff val = [''];
+        if($routerLimit==0){
+            $routerLimit=NULL;
         }
-        return $routePath;
+        return array_slice($routePath,0,$routerLimit);
+        
+        // if ($routerLimit == 0) {
+        //     return array_slice($routePath,0,NULL);
+        // } else {
+        //     //echo($routerLimit);
+        //     return array_slice($routePath,0,$routerLimit);
+        // }
     }
 }
 
 
-$routerCtrl = new RouterCtrl('http://a.com/', 'http://a.com/cnaa');
-$bbb = $routerCtrl->resolveRouter();
-print_r($bbb);
+// $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
+// $bbb = $routerCtrl->resolveRouter(2);
+// print_r($bbb);
+
+//usage:
+$routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
+$routePath = $routerCtrl->resolveRouter(); //argc is int, default is 0,
