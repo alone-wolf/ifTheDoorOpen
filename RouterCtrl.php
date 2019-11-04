@@ -41,7 +41,6 @@ class RouterCtrl
             $routerLimit=NULL;
         }
         return array_slice($routePath,0,$routerLimit);
-        
         // if ($routerLimit == 0) {
         //     return array_slice($routePath,0,NULL);
         // } else {
@@ -57,5 +56,5 @@ class RouterCtrl
 // print_r($bbb);
 
 //usage:
-$routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
-$routePath = $routerCtrl->resolveRouter(); //argc is int, default is 0,
+// $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
+// $routePath = $routerCtrl->resolveRouter(); //argc is int, default is 0
