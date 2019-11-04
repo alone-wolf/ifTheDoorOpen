@@ -28,7 +28,7 @@ $allowedOperateArray=array(
     'Off',
     'closed',
     '0'
-    )
+    ),
     'getStatus'=>array(
         'get',
     '-1',
