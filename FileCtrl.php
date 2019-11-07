@@ -19,8 +19,17 @@ class FileCtrl{
             return '-1';
         }
     }
+    public function putDataToFile($data){
+        if(file_exists($this->getFilePath())){
+            file_put_contents($this->getFilePath(),$data);
+            return 1;
+        }else{
+            return -1;
+        }
+    }
 }
 
 //usage
 // $fileCtrl=new FileCtrl('status.ini');
 // print($fileCtrl->getFileCon());
+//$fileCtrl->putDataToFile($data);
