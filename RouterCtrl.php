@@ -26,10 +26,12 @@ class RouterCtrl
         $this->setSCRIPTNAME($SCRIPT_NAME);
         $this->setREQUESTURI($REQUEST_URI);
     }
-    public function resolveRouter($routerLimit = NULL)
+    public function resolveRouter($routerLimit = 0)
     {
         $routePath = explode($this->getSCRIPTNAME(), $this->getREQUESTURI());
         $routePath = $routePath[1];
+        //delete the get method of request on url
+        $routePath = explode('?',$routePath)[0];
         $routePath = explode('/', $routePath);
         $routePath = array_diff($routePath,['']);
 
@@ -58,3 +60,8 @@ class RouterCtrl
 //usage:
 // $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
 // $routePath = $routerCtrl->resolveRouter(); //argc is int, default is 0
+
+//将类实例化，构造函数输入$_SEREVER的SCRIPT_NAME 和 REQUEST_URI
+//调用 resolveRouter()返回routePath数组
+//其中resolveRouter()函数能够输入对数组长度的限制
+//返回的数组从0开始
