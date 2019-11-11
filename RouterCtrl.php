@@ -23,14 +23,11 @@ class RouterCtrl
 
     public function __construct($path)
     {
-        //$scriptfilename=$path['SCRIPT_FILENAME'];
-        //$documentroot=$path['DOCUMENT_ROOT'];
-        //$requesturi=$path['REQUEST_URI'];
         $head=explode($path['DOCUMENT_ROOT'],$path['SCRIPT_FILENAME'])[1];
         $this->setSCRIPTNAME($head);
         $this->setREQUESTURI($path['REQUEST_URI']);
     }
-    public function resolveRouter($routerLimit = 0)
+    public function getRoutePath($routerLimit = 0)
     {
         $routePath = explode($this->getSCRIPTNAME(), $this->getREQUESTURI());
         $routePath = $routePath[1];
@@ -51,28 +48,14 @@ class RouterCtrl
     }
 
 }
-// function getData(){
-//     return array(
-//         $_SERVER['SCRIPT_FILENAME'],
-//         $_SERVER['REQUEST_URI']
-//     );
-// }
-// print('=========================<br>');
-// print_r($_SERVER);
-// print_r('<br>=======================<br>');
-function getdata(){
-    return $_SERVER;
-}
 
-// $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
-// $bbb = $routerCtrl->resolveRouter(2);
-// print_r($bbb);
 
 //usage:
-// $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
-// $routePath = $routerCtrl->resolveRouter(); //argc is int, default is 0
+// $routerCtrl = new RouterCtrl($_SERVER);
+// $routePath = $routerCtrl->getRoutePath(int argc);
+//argc is int, default is 0
 
-//将类实例化，构造函数输入$_SEREVER的SCRIPT_NAME 和 REQUEST_URI
-//调用 resolveRouter()返回routePath数组
-//其中resolveRouter()函数能够输入对数组长度的限制
-//返回的数组从0开始
+//将类实例化，构造函数输入$_SERVER
+//调用 getRoutePath()返回routePath数组
+//getRoutePath()函数能够输入对数组长度的限制
+//返回的数组从0开始 限制默认关闭
