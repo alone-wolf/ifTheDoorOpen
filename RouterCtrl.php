@@ -21,15 +21,20 @@ class RouterCtrl
         return $this->REQUEST_URI;
     }
 
-    public function __construct($SCRIPT_NAME, $REQUEST_URI)
+    public function __construct($path)
     {
-        $this->setSCRIPTNAME($SCRIPT_NAME);
-        $this->setREQUESTURI($REQUEST_URI);
+        //$scriptfilename=$path['SCRIPT_FILENAME'];
+        //$documentroot=$path['DOCUMENT_ROOT'];
+        //$requesturi=$path['REQUEST_URI'];
+        $head=explode($path['DOCUMENT_ROOT'],$path['SCRIPT_FILENAME'])[1];
+        $this->setSCRIPTNAME($head);
+        $this->setREQUESTURI($path['REQUEST_URI']);
     }
     public function resolveRouter($routerLimit = 0)
     {
         $routePath = explode($this->getSCRIPTNAME(), $this->getREQUESTURI());
         $routePath = $routePath[1];
+
         //delete the get method of request on url
         $routePath = explode('?',$routePath)[0];
         $routePath = explode('/', $routePath);
@@ -43,15 +48,21 @@ class RouterCtrl
             $routerLimit=NULL;
         }
         return array_slice($routePath,0,$routerLimit);
-        // if ($routerLimit == 0) {
-        //     return array_slice($routePath,0,NULL);
-        // } else {
-        //     //echo($routerLimit);
-        //     return array_slice($routePath,0,$routerLimit);
-        // }
     }
-}
 
+}
+// function getData(){
+//     return array(
+//         $_SERVER['SCRIPT_FILENAME'],
+//         $_SERVER['REQUEST_URI']
+//     );
+// }
+// print('=========================<br>');
+// print_r($_SERVER);
+// print_r('<br>=======================<br>');
+function getdata(){
+    return $_SERVER;
+}
 
 // $routerCtrl = new RouterCtrl($_SERVER['SCRIPT_NAME'],$_SERVER['REQUEST_URI']);
 // $bbb = $routerCtrl->resolveRouter(2);
