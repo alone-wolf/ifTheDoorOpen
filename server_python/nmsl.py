@@ -79,7 +79,7 @@ def user_get_door_status():
 def admin_page():
     return render_template("page.html")
 
-@app.route("/admin/door")
+@app.route("/admin/door",methods=['POST'])
 @check_method(allowed_methods=["POST"])
 @check_token
 def admin_change_door_status():
