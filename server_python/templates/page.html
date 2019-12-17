@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        admin page
+    </title>
+    <meta charset="utf8">
+    <script src="../static/jquery.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        *{
+            user-select: none;
+        }
+        body {
+            margin: 0px;
+            padding: 15px;
+            background-color: #1ABC9C;
+        }
+
+        .div_nav {
+            width: 100%;
+            height: 60px;
+            background-color: rgb(250, 250, 250);
+            /* background-color: #ECF0F1; */
+            margin-bottom: 30px;
+            border-radius: 30px;
+            box-shadow: 2px 2px 2px rgb(196, 196, 196);
+            letter-spacing: 3px;
+        }
+
+        .div_nav_item {
+            display: inline;
+            line-height: 60px;
+            color: #5D5D5D;
+            margin-left: 45px;
+            font-weight: lighter;
+            font-size: x-large;
+        }
+
+        .div_body {
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 20px;
+            /* background-color: rgb(230, 230, 230); */
+            background-color: rgb(250, 250, 250);
+            height: 500px;
+            border-radius: 7px;
+            padding: 30px;
+            box-shadow: 2px 2px 2px rgb(196, 196, 196);
+        }
+
+        .div_body_status {
+            margin: 0 auto;
+            /* margin-left: 30%; */
+            margin-bottom: 45px;
+        }
+
+        .div_body_status_item {
+            display: inline;
+        }
+
+        .div_body_switch {
+            /* margin-left: 30%; */
+            margin-bottom: 45px;
+        }
+
+        .div_body_switch_item {
+            display: inline-block;
+            width: 100px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 7px;
+            background-color: rgb(236, 225, 175);
+        }
+
+        #open:hover {
+            background-color: #1ABC9C;
+        }
+        #close:hover {
+            background-color: #E40045;
+        }
+        #config:hover{
+            background-color: darkgray;
+        }
+
+        .div_body_config input{
+            width: 250px;
+            height: 25px;
+            line-height: 25px;
+        }
+        .div_body_config button{
+            height: 30px;
+            width: 70px;
+            /* padding: 6px; */
+            margin: 0px;
+            border: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div_nav">
+        <div class="div_nav_item">ifTheDoorOpen</div>
+    </div>
+    <div class="div_body">
+        <div class="div_body_status">
+            <div class="div_body_status_item">门禁状态: </div>
+            <div class="div_body_status_item" id="status">CLOSED</div>
+        </div>
+        <div class="div_body_switch">
+            <div class="div_body_switch_item" id="open">open</div>
+            <div class="div_body_switch_item" id="close">close</div>
+            <!-- <div class="div_body_switch_item" id="config">config</div> -->
+        </div>
+        <div class="div_body_config">
+            <div class="div_body_config_item">
+                <p>server addr:</p>
+                <input type="text" id="input_serveraddr" value="http://127.0.0.1:8080">
+                <button id="button_apply_serveraddr">apply</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    let status;
+    let data;
+    $(document).ready(function () {
+        updateStatusBoard();
+    });
+    $("#open").click(function(){
+        var serveraddr = getServerAddr();
+        if(serveraddr=="none"){
+            $("#status").text("get none of serveraddr!");
+            return;
+        }
+        $.ajax({
+            // crossDomain: true,
+            beforeSend: function(req) {
+                req.setRequestHeader("Security-Token", "NMSL");
+            },
+            url:serveraddr+="/admin/door",
+            data:{"action":"open"},
+            method:'post',
+            // dataType:'json',
+            success:function(data) {
+                console.log(data);
+                updateStatusBoard();
+            }
+        });
+    });
+    $("#close").click(function(){
+        var serveraddr = getServerAddr();
+        if(serveraddr=="none"){
+            $("#status").text("get none of serveraddr!");
+            return;
+        }
+        updateStatusBoard();
+    });
+    $("#button_apply_serveraddr").click(function () {
+        var serveraddr = $("#input_serveraddr").val();
+        localStorage.setItem("serveraddr", serveraddr);
+        var tmp = localStorage.getItem("serveraddr");
+        if (tmp == serveraddr) {
+            alert("serveraddr applied to " + tmp);
+        } else {
+            alert("failed to apply serveraddr");
+        }
+    });
+
+    function updateStatusBoard(){
+        var serveraddr = getServerAddr();
+        if(serveraddr=="none"){
+            $("#status").text("get none of serveraddr!");
+            return;
+        }
+        serveraddr+="/door";
+        $.get(serveraddr,function(data,status){
+            if(status=="success"){
+                if(data=="Opened"){
+                    $("#status").text("Opened");
+                }
+                if(data=="Closed"){
+                    $("#status").text("Closed");
+                }
+                else{
+                    alert("error: get wrong data from server!");
+                    $("#status").text("UNKNOWN");
+                }
+            }else{
+                alert("error: failed to get data from server!");
+                $("#status").text("ERROR");
+            }
+        });
+    }
+
+    function getServerAddr(){
+        var serveraddr = localStorage.getItem("serveraddr");
+        if(serveraddr!=null){
+            return serveraddr;
+        }else{
+            alert("failed to get seerveraddr");
+            return "none";
+        }
+    }
+</script>

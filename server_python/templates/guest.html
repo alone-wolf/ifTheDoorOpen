@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        admin page
+    </title>
+    <meta charset="utf8">
+    <script src="../static/jquery.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        *{
+            user-select: none;
+        }
+        body {
+            margin: 0px;
+            padding: 15px;
+            background-color: #1ABC9C;
+        }
+
+        .div_nav {
+            width: 100%;
+            height: 60px;
+            background-color: rgb(250, 250, 250);
+            /* background-color: #ECF0F1; */
+            margin-bottom: 30px;
+            border-radius: 30px;
+            box-shadow: 2px 2px 2px rgb(196, 196, 196);
+            letter-spacing: 3px;
+        }
+
+        .div_nav_item {
+            display: inline;
+            line-height: 60px;
+            color: #5D5D5D;
+            margin-left: 45px;
+            font-weight: lighter;
+            font-size: x-large;
+        }
+
+        .div_body {
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 20px;
+            background-color: rgb(250, 250, 250);
+            border-radius: 7px;
+            padding: 30px;
+            box-shadow: 2px 2px 2px rgb(196, 196, 196);
+        }
+
+        .div_body_status {
+            margin: 0 auto;
+            margin-bottom: 45px;
+            padding: 100px;
+        }
+
+        .div_body_status_item {
+            width: 100%;
+            text-align: center;
+            height: 200px;
+            line-height: 200px;
+            font-size: xx-large;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div_nav">
+        <div class="div_nav_item">ifTheDoorOpen</div>
+    </div>
+    <div class="div_body">
+        <div class="div_body_status">
+            <div class="div_body_status_item" id="status">{{status}}</div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function(){
+        if($("#status").text()=="Closed"){
+            $(".div_body_status_item").css("background-color","#E40045");
+            return;
+        }
+        if($("#status").text()=="Opened"){
+            $(".div_body_status_item").css("background-color","#1ABC9C");
+            return;
+        }else{
+            $(".div_body_status_item").css("background-color","darkgray")
+        }
+    });
+</script>
+
+</html>
