@@ -132,6 +132,8 @@
     let data;
     $(document).ready(function () {
         updateStatusBoard();
+        var serveraddr = getServerAddr();
+        $("#input_serveraddr").val(serveraddr);
     });
     $("#open").click(function(){
         var serveraddr = getServerAddr();
@@ -180,6 +182,9 @@
     });
     $("#button_apply_serveraddr").click(function () {
         var serveraddr = $("#input_serveraddr").val();
+        if(serveraddr[serveraddr.length-1]=='/'){
+            serveraddr=serveraddr.substring(0,serveraddr.length-1);
+        }
         localStorage.setItem("serveraddr", serveraddr);
         var tmp = localStorage.getItem("serveraddr");
         if (tmp == serveraddr) {
