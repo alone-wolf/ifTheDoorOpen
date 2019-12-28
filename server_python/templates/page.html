@@ -114,7 +114,6 @@
         <div class="div_body_switch">
             <div class="div_body_switch_item" id="open">open</div>
             <div class="div_body_switch_item" id="close">close</div>
-            <!-- <div class="div_body_switch_item" id="config">config</div> -->
         </div>
         <div class="div_body_config">
             <div class="div_body_config_item">
@@ -202,9 +201,6 @@
         }
         serveraddr+="/door";
         $.get(serveraddr,function(data,status){
-            // console.log("update status");
-            // console.log(status);
-            // console.log(data);
             if(status=="success"){
                 if(data=="Opened"){
                     $("#status").text("Opened");

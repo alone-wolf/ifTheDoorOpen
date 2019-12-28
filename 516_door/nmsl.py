@@ -6,7 +6,10 @@ from threading import Lock
 from optparse import OptionParser
 import time
 import json
+
 from door_516.db.database import DatabaseDoor
+
+
 class DoorStatus:
     def __init__(self):
         self._status = "Closed"
@@ -48,18 +51,6 @@ app = Flask(
 )
 
 
-
-# def check_method(allowed_methods: list) -> callable:
-#     def decorator(func: callable) -> callable:
-#         @wraps(func)
-#         def wrapper(*args, **kwargs):
-#             if request.method not in allowed_methods:
-#                 return Response(status=405)
-#             return func(*args, **kwargs)
-#         return wrapper
-#     return decorator
-
-
 def check_token(func: callable) -> callable:
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -69,38 +60,31 @@ def check_token(func: callable) -> callable:
         return func(*args, **kwargs)
     return wrapper
 
-@app.route("/",methods=["GET"])
-# @check_method(allowed_methods=["GET"])
-def display_status():
-    return render_template("guest.html",status=DOOR_STATUS.status)
 
-@app.route("/door",methods=["GET"])
-# @check_method(allowed_methods=["GET"])
+@app.route("/door", methods=["GET"])
 def user_get_door_status():
     return DOOR_STATUS.status
 
-@app.route("/admin",methods=["GET"])
-# @check_method(allowed_methods=["GET"])
-def admin_page():
-    return render_template("page.html")
 
-@app.route("/admin/door",methods=['POST'])
-# @check_method(allowed_methods=["POST"])
+@app.route("/admin/door", methods=["POST"])
 @check_token
 def admin_change_door_status():
     action = request.form.get("action", "")
     if not action:
         return Response(status=400)
+
     if action == "OPEN":
         DOOR_STATUS.open()
     elif action == "CLOSE":
         DOOR_STATUS.close()
     else:
         return Response(status=400)
+
     return "SUCCESS"
 
+
 @app.route("/admin/door/logs", methods=["GET"])
-# @check_token
+@check_token
 def admin_get_door_logs():
     start_num = request.form.get("start_num", None)
     rec_num = request.form.get("rec_num", None)
