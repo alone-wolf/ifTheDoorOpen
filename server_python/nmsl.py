@@ -115,7 +115,7 @@ if __name__ == "__main__":
         "-l", "--host",
         action="store",
         dest="host",
-        default="localhost",
+        default="0.0.0.0",
         help="Listen address."
     )
     parser.add_option(
