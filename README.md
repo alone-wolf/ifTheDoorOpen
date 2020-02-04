@@ -1,3 +1,3 @@
 # ifTheDoorOpen
-## 
+## for private usage
 ##
