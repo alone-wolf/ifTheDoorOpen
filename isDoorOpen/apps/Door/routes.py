@@ -27,6 +27,7 @@ def admin():
 
 
 @Door_routes.route('/admin/logs')
+@check_access_token
 def admin_logs_():
     door_log_list = []
     for i in db_select_all():
