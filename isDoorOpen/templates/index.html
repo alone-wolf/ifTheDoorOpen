@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ifTheDoorOpen</title>
+
+    <link crossorigin="anonymous" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /*门里面*/
+        
+        #door {
+            width: 160px;
+            height: 310px;
+            position: relative;
+            top: 200px;
+            margin: 0 auto;
+            border-radius: 5px 5px 0px 0px;
+            background-color: ivory;
+            background-size: 100% 100%;
+            perspective: 800px;
+            border: rgb(179, 148, 64) solid 5px;
+            -webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212)));
+        }
+        
+        #left_door {
+            position: relative;
+            top: -100px;
+            width: 150px;
+            height: 300px;
+            background-color: rgb(211, 183, 105);
+            box-sizing: border-box;
+            /* border-radius: 5px 5px 0px 0px; */
+            float: left;
+            z-index: 1;
+            transition: all 1.8s ease;
+            transform-origin: left center;
+            -webkit-box-reflect: below 20px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212)));
+        }
+        
+        #left_door div {
+            /* 门把手 */
+            width: 17px;
+            height: 17px;
+            border: 2px solid #775d41;
+            border-radius: 50%;
+            margin-top: 150px;
+            margin-left: 120px;
+            /* -webkit-box-reflect: below 150px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212))); */
+        }
+        
+        #door_id {
+            width: 70px;
+            height: 30px;
+            background-color: rgb(129, 151, 149);
+            text-align: center;
+            font-size: 20px;
+            position: relative;
+            top: -340px;
+            margin: 0 auto;
+            border-radius: 3px;
+            line-height: 30px;
+        }
+        
+        #wall {
+            width: 86%;
+            height: 500px;
+            margin: 0 auto;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0);
+            border-radius: 50px 50px 0px 0px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="main_part">
+        <div id="wall">
+            <div id="door">
+                <div style="height: 100px;"></div>
+                <div id="left_door">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="door_id">516</div>
+        <button type="button" class="btn btn-default" v-on:click="show_alert_dialog()" style="position: absolute;right: 8px;top: 8px;">i</button>
+
+
+
+        <div class="modal fade" id="alert_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>界面说明</p>
+                        <p>门牌绿色：获取数据成功</p>
+                        <p>门牌红色：获取数据失败</p>
+                        <p>门牌灰色：js执行失败</p>
+                        <p>门处于打开状态：喜闻乐见</p>
+                        <p>门处于关闭状态：可能处于数据获取过程中或者门未开</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-close" aria-hidden="true"></span>关闭
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP" src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-zn1vPVAulmXb7m7zo/eHPJOkmryKZUNog1TsyNLdDjCccxcOOGAUyC62x3QNN99x" src="https://lib.baomitu.com/axios/0.20.0-0/axios.min.js"></script>
+</body>
+<script>
+    new Vue({
+        el: "#main_part",
+        data: {
+            status: {
+                doorOpened: false
+            },
+        },
+        methods: {
+            show_alert_dialog: function() {
+                $("#alert_dialog").modal();
+            },
+            open_door: function() {
+                document.getElementById("left_door").setAttribute("style", "transform: rotateY(0deg);");
+            },
+            close_door: function() {
+                document.getElementById("left_door").setAttribute("style", "transform: rotateY(-140deg);");
+            },
+            get_status_succeed: function() {
+                document.getElementById("door_id").setAttribute("style", "background-color: teal;color: white;");
+            },
+            get_status_failed: function() {
+                document.getElementById("door_id").setAttribute("style", "background-color: rgb(219, 42, 42);color: white;");
+            }
+        },
+        watch: {
+            "status.doorOpened": function(oldVal, newVal) {
+                if (newVal) {
+                    this.open_door();
+                } else {
+                    this.close_door();
+                }
+            }
+        },
+        mounted() {
+
+            this.status.doorOpened = false;
+
+            var that = this;
+
+            axios.get("/door")
+                .then(response => {
+                    that.get_status_succeed();
+                    if (response.data == "Opened") {
+                        that.status.doorOpened = true;
+                        that.open_door();
+                    }
+                }).catch(error => {
+                    that.get_status_failed();
+                });
+        }
+    });
+</script>
+
+</html>

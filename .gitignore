@@ -1,1 +1,9 @@
 .venv
+data
+.vscode
+__pycache__
+*/__pycache__
+*/*/__pycache__
+/isDoorOpen/templates/.idea/
+/venv
+/.idea/

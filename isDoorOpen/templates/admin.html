@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ifTheDoorOpen admin</title>
+
+    <link crossorigin="anonymous" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /*门里面*/
+        
+        #door {
+            width: 160px;
+            height: 310px;
+            position: relative;
+            top: 200px;
+            margin: 0 auto;
+            border-radius: 5px 5px 0px 0px;
+            background-color: ivory;
+            background-size: 100% 100%;
+            perspective: 800px;
+            border: rgb(179, 148, 64) solid 5px;
+            -webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212)));
+        }
+        
+        #left_door {
+            position: relative;
+            top: -100px;
+            width: 150px;
+            height: 300px;
+            background-color: rgb(211, 183, 105);
+            box-sizing: border-box;
+            /* border-radius: 5px 5px 0px 0px; */
+            float: left;
+            z-index: 1;
+            transition: all 1.8s ease;
+            transform-origin: left center;
+            -webkit-box-reflect: below 20px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212)));
+        }
+        
+        #left_door div {
+            /* 门把手 */
+            width: 17px;
+            height: 17px;
+            border: 2px solid #775d41;
+            border-radius: 50%;
+            margin-top: 150px;
+            margin-left: 120px;
+            /* -webkit-box-reflect: below 150px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.212))); */
+        }
+        
+        #door_id {
+            width: 70px;
+            height: 30px;
+            background-color: rgb(129, 151, 149);
+            text-align: center;
+            font-size: 20px;
+            position: relative;
+            top: -340px;
+            margin: 0 auto;
+            border-radius: 3px;
+            line-height: 30px;
+        }
+        
+        #wall {
+            width: 86%;
+            height: 500px;
+            margin: 0 auto;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0);
+            border-radius: 50px 50px 0px 0px;
+        }
+    </style>
+</head>
+
+<body style="margin: 8px;">
+
+    <div id="main_part">
+        <div id="wall">
+            <div id="door" v-on:click="switch_door_status">
+                <div style="height: 100px;"></div>
+                <div id="left_door">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div id="door_id">516</div>
+        <button type="button" class="btn btn-default" v-on:click="show_settings_dialog()" style="position: relative;top:300px">设置</button>
+        <div class="panel panel-danger" style="position: relative;top:310px">
+            <div class="panel-heading">
+                <h3 class="panel-title">Access Record</h3>
+            </div>
+            <div class="panel-body">
+
+                {% raw %}
+
+                <div class="panel panel-default" v-for="(item,index) in access_logs">
+                    <div class="panel-body">
+                        <p>{{ item.id }}</p>
+                        <p>user: {{ item.user }}</p>
+                        <p>is open: {{ item.is_open }}</p>
+                        <p>{{ FormatDateTime(item.time) }}</p>
+                    </div>
+                </div>
+                {% endraw %}
+
+
+            </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="settings_dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">设置</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>access token</label>
+                            <input type="text" class="form-control" v-model:value="settings.access_token">
+                        </div>
+                        <div class="form-group">
+                            <label>user tag</label>
+                            <input type="text" class="form-control" v-model:value="settings.user_tag">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-danger" v-on:click='admin_db_init()'>创建数据库</button>
+                        <button type="button" class="btn btn-danger" v-on:click='admin_db_drop()'>删除数据库</button>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click='settings_save()'><span class="glyphicon glyphicon-floppy-disk"
+                                aria-hidden="true"></span>保存
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP" src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-zn1vPVAulmXb7m7zo/eHPJOkmryKZUNog1TsyNLdDjCccxcOOGAUyC62x3QNN99x" src="https://lib.baomitu.com/axios/0.20.0-0/axios.min.js"></script>
+</body>
+<script>
+    var e_light_on = true; // true false
+    var sun_light_value = 0; // 0--11--23
+    var e_light_out_on = true; // true false
+    new Vue({
+        el: "#main_part",
+        data: {
+            status: {
+                doorOpened: false
+            },
+            access_logs: [],
+            settings: {
+                access_token: localStorage.getItem("access_token"),
+                user_tag: localStorage.getItem("user_tag")
+            }
+        },
+        methods: {
+            switch_door_status: function() {
+                var that = this;
+                var axios_post_form_data = axios.create();
+                axios_post_form_data.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                axios_post_form_data.defaults.headers.post['access_token'] = this.settings.access_token;
+                axios_post_form_data.defaults.transformRequest = [function(data) {
+                    let ret = '';
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
+                    }
+                    return ret;
+                }]
+                axios_post_form_data({
+                    method: 'post',
+                    url: '/admin/door',
+                    data: {
+                        status: this.status.doorOpened ? "Close" : "Open",
+                        user: this.settings.user_tag
+                    }
+                }).then(response => {
+                    that.status.doorOpened = !that.status.doorOpened;
+                    that.get_logs();
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            get_door_status() {
+                var that = this;
+
+                axios.get("/door")
+                    .then(response => {
+                        document.getElementById("door_id").setAttribute("style", "background-color: teal;color: white;")
+                        if (response.data == "Opened") {
+                            that.status.doorOpened = true;
+                            document.getElementById("left_door").setAttribute("style", "transform: rotateY(-140deg);")
+                        }
+                    }).catch(error => {
+                        document.getElementById("door_id").setAttribute("style", "background-color: rgb(219, 42, 42);color: white;")
+
+                    });
+            },
+            get_logs: function() {
+                var that = this;
+                axios.get("/admin/logs", {
+                        headers: {
+                            "Security-Token": this.settings.access_token
+                        }
+                    })
+                    .then(response => {
+                        that.access_logs = response.data;
+                        that.access_logs = that.access_logs.reverse();
+                    })
+            },
+            admin_db_init: function() {
+                if (!confirm("请注意 此操作将创建数据库，如果数据库已存在，操作不会生效！")) {
+                    return;
+                }
+                axios.get('/admin/db/init', {
+                    headers: {
+                        access_token: this.settings.access_token
+                    }
+                }).then(response => {
+                    if (response.data == "create done") {
+                        alert("创建成功");
+                    }
+                });
+            },
+            admin_db_drop: function() {
+                if (!confirm("请注意 此操作将删除数据库！")) {
+                    return;
+                }
+                axios.get('/admin/db/drop', {
+                    headers: {
+                        access_token: this.settings.access_token
+                    }
+                }).then(response => {
+                    if (response.data == "drop done") {
+                        alert("删除成功");
+                    }
+                });
+            },
+            settings_save: function() {
+                localStorage.setItem('access_token', this.settings.access_token);
+                localStorage.setItem('user_tag', this.settings.user_tag);
+            },
+            show_settings_dialog: function() {
+                $("#settings_dialog").modal();
+            },
+            init_data_browser: function(key, defaultValue) {
+                if (localStorage.getItem(key) == null) {
+                    localStorage.setItem(key, defaultValue);
+                }
+            },
+            FormatDateTime: function(UnixTime) {
+                var date = new Date(parseInt(UnixTime));
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                var d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var minute = date.getMinutes();
+                var second = date.getSeconds();
+                minute = minute < 10 ? ('0' + minute) : minute;
+                second = second < 10 ? ('0' + second) : second;
+                return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+            }
+        },
+        watch: {
+            "status.doorOpened": function(oldVal, newVal) {
+                if (newVal) {
+                    document.getElementById("left_door").setAttribute("style", "transform: rotateY(0deg);")
+                } else {
+                    document.getElementById("left_door").setAttribute("style", "transform: rotateY(-140deg);")
+                }
+            }
+        },
+        mounted() {
+            this.init_data_browser('access_token', "0");
+            this.init_data_browser('user_tag', "0");
+            this.get_door_status();
+            this.get_logs();
+        },
+
+    })
+</script>
+
+</html>

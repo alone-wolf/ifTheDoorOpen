@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link crossorigin="anonymous" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            padding-left: 9px;
+            padding-right: 9px;
+        }
+    </style>
+
+    {% block icon %}
+        <link rel="shortcut icon" href="/static/favicon.ico"/>
+        <link rel="bookmark" href="/static/favicon.ico" type="image/x-icon"/>
+    {% endblock %}
+
+
+    <title>
+        {% block title %}
+            {% if title1 %}
+                {{ title1 }}
+                {% if title2 %}
+                    - {{ title2 }}
+                {% endif %}
+            {% else %}
+                template
+            {% endif %}
+        {% endblock %}
+    </title>
+    {% block addition_css %}
+    {% endblock %}
+
+
+</head>
+
+<body>
+{% block header %}
+    <!-- nav -->
+    <div class="page-header">
+        <h1>
+            {% if title1 %}{{ title1 }}{% else %}template{% endif %}<small>
+            {% if title2 %}{{ title2 }}{% else %}page{% endif %}</small>
+        </h1>
+    </div>
+
+    <!-- con body  -->
+{% endblock %}
+{% block body %}
+
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="#">Sticky</a>
+        </li>
+        <li>
+            <a href="#">tabSync</a>
+        </li>
+        <li class="active">toDoList</li>
+    </ol>
+
+
+    <br>
+    <hr>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Panel heading</div>
+        <div class="panel-body">
+            <p>Text goes here...</p>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Heading 1</th>
+            </tr>
+            <tr>
+                <th>Heading 2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Content 1</td>
+            </tr>
+            <tr>
+                <td>Content 2</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
+{% endblock %}
+
+{% block foot %}
+    <!-- foot -->
+    <hr>
+    <p class="navbar-text pull-left" style="display: inline-block;">
+        &copy; powered by WolfHugo
+    </p>
+{% endblock %}
+
+<script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP" src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-zn1vPVAulmXb7m7zo/eHPJOkmryKZUNog1TsyNLdDjCccxcOOGAUyC62x3QNN99x" src="https://lib.baomitu.com/axios/0.20.0-0/axios.min.js"></script>
+{% block addition_js %}
+{% endblock %}
+</body>
+
+</html>
