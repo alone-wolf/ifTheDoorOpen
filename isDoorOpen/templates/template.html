@@ -17,42 +17,30 @@
     </style>
 
     {% block icon %}
-        <link rel="shortcut icon" href="/static/favicon.ico"/>
-        <link rel="bookmark" href="/static/favicon.ico" type="image/x-icon"/>
-    {% endblock %}
+    <link rel="shortcut icon" href="/static/favicon.svg" />
+    <link rel="bookmark" href="/static/favicon.svg" type="image/x-icon" /> {% endblock %}
 
 
     <title>
-        {% block title %}
-            {% if title1 %}
-                {{ title1 }}
-                {% if title2 %}
-                    - {{ title2 }}
-                {% endif %}
-            {% else %}
-                template
-            {% endif %}
-        {% endblock %}
+        {% block title %} {% if title1 %} {{ title1 }} {% if title2 %} - {{ title2 }} {% endif %} {% else %} template {% endif %} {% endblock %}
     </title>
-    {% block addition_css %}
-    {% endblock %}
+    {% block addition_css %} {% endblock %}
 
 
 </head>
 
 <body>
-{% block header %}
+    {% block header %}
     <!-- nav -->
     <div class="page-header">
         <h1>
             {% if title1 %}{{ title1 }}{% else %}template{% endif %}<small>
-            {% if title2 %}{{ title2 }}{% else %}page{% endif %}</small>
+                {% if title2 %}{{ title2 }}{% else %}page{% endif %}</small>
         </h1>
     </div>
 
     <!-- con body  -->
-{% endblock %}
-{% block body %}
+    {% endblock %} {% block body %}
 
 
     <ol class="breadcrumb">
@@ -82,20 +70,20 @@
         <!-- Table -->
         <table class="table">
             <thead>
-            <tr>
-                <th>Heading 1</th>
-            </tr>
-            <tr>
-                <th>Heading 2</th>
-            </tr>
+                <tr>
+                    <th>Heading 1</th>
+                </tr>
+                <tr>
+                    <th>Heading 2</th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Content 1</td>
-            </tr>
-            <tr>
-                <td>Content 2</td>
-            </tr>
+                <tr>
+                    <td>Content 1</td>
+                </tr>
+                <tr>
+                    <td>Content 2</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -108,22 +96,19 @@
             Panel content
         </div>
     </div>
-{% endblock %}
-
-{% block foot %}
+    {% endblock %} {% block foot %}
     <!-- foot -->
     <hr>
     <p class="navbar-text pull-left" style="display: inline-block;">
         &copy; powered by WolfHugo
     </p>
-{% endblock %}
+    {% endblock %}
 
-<script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP" src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
     <script crossorigin="anonymous" integrity="sha384-zn1vPVAulmXb7m7zo/eHPJOkmryKZUNog1TsyNLdDjCccxcOOGAUyC62x3QNN99x" src="https://lib.baomitu.com/axios/0.20.0-0/axios.min.js"></script>
-{% block addition_js %}
-{% endblock %}
+    {% block addition_js %} {% endblock %}
 </body>
 
 </html>
