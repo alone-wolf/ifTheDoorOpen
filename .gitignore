@@ -4,6 +4,7 @@ data
 __pycache__
 */__pycache__
 */*/__pycache__
-/isDoorOpen/templates/.idea/
-/venv
-/.idea/
+*/*/*/__pycache__
+isDoorOpen/templates/.idea/
+venv
+.idea/
