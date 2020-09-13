@@ -21,5 +21,5 @@ def db_insert(is_open, user):
 
 def db_select_all():
     tmp = Door.query.all()
-    print(tmp)
+    # print(tmp)
     return tmp
