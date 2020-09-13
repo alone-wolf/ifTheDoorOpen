@@ -163,6 +163,7 @@
     new Vue({
         el: "#main_part",
         data: {
+            request_lock = false,
             status: {
                 doorOpened: false
             },
@@ -174,6 +175,12 @@
         },
         methods: {
             switch_door_status: function() {
+                if (this.request_lock) {
+                    alert("关键请求同一时间只可以执行一次！");
+                    return;
+                } else {
+                    this.request_lock = true;
+                }
                 var that = this;
                 var axios_post_form_data = axios.create();
                 axios_post_form_data.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -193,9 +200,11 @@
                         user: this.settings.user_tag
                     }
                 }).then(response => {
+                    that.request_lock = false;
                     that.status.doorOpened = !that.status.doorOpened;
                     that.get_logs();
                 }).catch(error => {
+                    that.request_lock = false;
                     console.log(error);
                 });
             },
@@ -230,28 +239,46 @@
                 if (!confirm("请注意 此操作将创建数据库，如果数据库已存在，操作不会生效！")) {
                     return;
                 }
+                if (this.request_lock) {
+                    alert("关键请求同一时间只可以执行一次！");
+                    return;
+                } else {
+                    this.request_lock = true;
+                }
                 axios.get('/admin/db/init', {
                     headers: {
                         access_token: this.settings.access_token
                     }
                 }).then(response => {
+                    that.request_lock = false;
                     if (response.data == "create done") {
                         alert("创建成功");
                     }
+                }).catch(error => {
+                    that.request_lock = false;
                 });
             },
             admin_db_drop: function() {
                 if (!confirm("请注意 此操作将删除数据库！")) {
                     return;
                 }
+                if (this.request_lock) {
+                    alert("关键请求同一时间只可以执行一次！");
+                    return;
+                } else {
+                    this.request_lock = true;
+                }
                 axios.get('/admin/db/drop', {
                     headers: {
                         access_token: this.settings.access_token
                     }
                 }).then(response => {
+                    that.request_lock = false;
                     if (response.data == "drop done") {
                         alert("删除成功");
                     }
+                }).catch(error => {
+                    that.request_lock = false;
                 });
             },
             settings_save: function() {
