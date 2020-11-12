@@ -44,16 +44,15 @@ def admin_logs_():
 @Door_routes.route('/admin/door', methods=['POST'])
 @check_access_token
 def admin_door():
-    status = request.form.get("status", "")
+    status = request.form.get("status") or abort(400)
     user = request.form.get("user", "blank")
-    if status == "Open":
+    if status == "Open" and not settings.DoorIsOpen:
         settings.DoorIsOpen = True
         db_insert(True, user)
-    elif status == "Close":
+    elif status == "Close" and settings.DoorIsOpen:
         settings.DoorIsOpen = False
         db_insert(False, user)
-    else:
-        abort(400)
+
     return "door is " + status
 
 
