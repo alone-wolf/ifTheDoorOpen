@@ -103,7 +103,7 @@
                     <div class="panel-body">
                         <p>{{ item.id }}</p>
                         <p>user: {{ item.user }}</p>
-                        <p>is open: {{ item.is_open }}</p>
+                        <p>operate: {{ get_operation(item.is_open) }}</p>
                         <p>{{ FormatDateTime(item.time) }}</p>
                     </div>
                 </div>
@@ -307,6 +307,13 @@
                 minute = minute < 10 ? ('0' + minute) : minute;
                 second = second < 10 ? ('0' + second) : second;
                 return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+            },
+            get_operation:function(a){
+                if(a){
+                    return "Open";
+                }else{
+                    return "Close";
+                }
             }
         },
         watch: {
