@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RR QRCode</title>
+    <link crossorigin="anonymous" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="panel panel-warning" style="margin: 16px;">
+        <div class="panel-heading">
+            <h3 class="panel-title" id="hhh">QR Code Stage</h3>
+        </div>
+        <div class="panel-body" id="ppp">
+
+        </div>
+    </div>
+
+</body>
+
+<script src="/static/qrcode.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    var protocol = window.location.protocol;
+    var domain = window.location.host;
+    var token = getQueryVariable("token");
+
+    if (token == false || token == "") {
+        location.href = "/err";
+    }
+
+    var urlstr = protocol + "//" + domain + "/rr/stage?token=" + token;
+
+    var qr_doce_div = document.createElement('div');
+    qr_doce_div.setAttribute('style', 'margin-top:7px;border:5px solid white;width:100px;align:center');
+
+    var qrcode = new QRCode(qr_doce_div, { width: 400, height: 400 });
+    qrcode.makeCode(urlstr);
+
+    var card = document.getElementById("ppp");
+    card.appendChild(qr_doce_div);
+    document.getElementById("hhh").appendChild(document.createTextNode(" "+urlstr));
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) { return pair[1]; }
+        }
+        return (false);
+    }
+</script>
+
+</html>

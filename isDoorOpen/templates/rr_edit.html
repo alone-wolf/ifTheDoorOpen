@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RR Edit</title>
+    <link crossorigin="anonymous" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        href="https://lib.baomitu.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" style="margin: 16px;">
+
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+                <legend>Form title</legend>
+
+                <div class="form-group">
+                    <label for="">leader_id</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=leader_id>
+                </div>
+                <div class="form-group">
+                    <label for="">leader_name</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=leader_name>
+                </div>
+                <div class="form-group">
+                    <label for="">approval_cycle_start_time</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=approval_cycle_start_time>
+                </div>
+                <div class="form-group">
+                    <label for="">approval_cycle_mid_time</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=approval_cycle_mid_time>
+                </div>
+                <div class="form-group">
+                    <label for="">approval_cycle_end_time</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=approval_cycle_end_time>
+                </div>
+                <div class="form-group">
+                    <label for="">student_id</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_id>
+                </div>
+                <div class="form-group">
+                    <label for="">student_name</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_name>
+                </div>
+                <div class="form-group">
+                    <label for="">student_gender</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_gender>
+                </div>
+                <div class="form-group">
+                    <label for="">student_identity</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_identity>
+                </div>
+                <div class="form-group">
+                    <label for="">student_grade</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_grade>
+                </div>
+                <div class="form-group">
+                    <label for="">student_academy</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_academy>
+                </div>
+                <div class="form-group">
+                    <label for="">student_major</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_major>
+                </div>
+                <div class="form-group">
+                    <label for="">student_class</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=student_class>
+                </div>
+                <div class="form-group">
+                    <label for="">school_year</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=school_year>
+                </div>
+                <div class="form-group">
+                    <label for="">semester</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=semester>
+                </div>
+                <div class="form-group">
+                    <label for="">day_for_request</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=day_for_request>
+                </div>
+                <div class="form-group">
+                    <label for="">request_type</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=request_type>
+                </div>
+                <div class="form-group">
+                    <label for="">request_time_from</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=request_time_from>
+                </div>
+                <div class="form-group">
+                    <label for="">request_time_to</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=request_time_to>
+                </div>
+                <div class="form-group">
+                    <label for="">position</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=position>
+                </div>
+                <div class="form-group">
+                    <label for="">matter</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=matter>
+                </div>
+                <div class="form-group">
+                    <label for="">access_token</label>
+                    <input type="text" class="form-control" placeholder="Input field" v-model=access_token>
+                </div>
+
+
+
+                <button class="btn btn-primary" @click="update">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    src="https://lib.baomitu.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-+jvb+jCJ37FkNjPyYLI3KJzQeD8pPFXUra3B/QJFqQ3txYrUPIP1eOfxK4h3cKZP"
+    src="https://lib.baomitu.com/vue/2.6.11/vue.js"></script>
+<script crossorigin="anonymous" integrity="sha384-zn1vPVAulmXb7m7zo/eHPJOkmryKZUNog1TsyNLdDjCccxcOOGAUyC62x3QNN99x"
+    src="https://lib.baomitu.com/axios/0.20.0-0/axios.min.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            token: "1",
+            leader_id: "1",
+            leader_name: "1",
+            approval_cycle_start_time: "1",
+            approval_cycle_mid_time: "1",
+            approval_cycle_end_time: "1",
+            student_id: "1",
+            student_name: "1",
+            student_gender: "1",
+            student_identity: "1",
+            student_grade: "1",
+            student_academy: "1",
+            student_major: "1",
+            student_class: "1",
+            school_year: "1",
+            semester: "1",
+            day_for_request: "1",
+            request_type: "1",
+            request_time_from: "1",
+            request_time_to: "1",
+            position: "1",
+            matter: "1",
+            access_token: "1"
+        },
+        methods: {
+            update: function () {
+                var that = this;
+                var axios_post_form_data = axios.create();
+                axios_post_form_data.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                axios_post_form_data.defaults.headers.post['access_token'] = this.access_token;
+                axios_post_form_data.defaults.transformRequest = [function (data) {
+                    let ret = '';
+                    for (let it in data) {
+                        ret += encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
+                    }
+                    return ret;
+                }];
+                axios_post_form_data({
+                    method: "post",
+                    url: "/rr/admin/api/init",
+                    data: {
+                        token: that.token,
+                        leader_id: that.leader_id,
+                        leader_name: that.leader_name,
+                        approval_cycle_start_time: that.approval_cycle_start_time,
+                        approval_cycle_mid_time: that.approval_cycle_mid_time,
+                        approval_cycle_end_time: that.approval_cycle_end_time,
+                        student_id: that.student_id,
+                        student_name: that.student_name,
+                        student_gender: that.student_gender,
+                        student_identity: that.student_identity,
+                        student_grade: that.student_grade,
+                        student_academy: that.student_academy,
+                        student_major: that.student_major,
+                        student_class: that.student_class,
+                        school_year: that.school_year,
+                        semester: that.semester,
+                        day_for_request: that.day_for_request,
+                        request_type: that.request_type,
+                        request_time_from: that.request_time_from,
+                        request_time_to: that.request_time_to,
+                        position: that.position,
+                        matter: that.matter
+                    }
+                }).then(r => {
+                    console.log(r);
+                    if (confirm("goto page?")) {
+                        location.href = "/rr/stage?token=" + that.getQueryVariable("token");
+                    }
+                }).catch(e => {
+                    console.log(e);
+                });
+            },
+            getQueryVariable: function (variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    if (pair[0] == variable) { return pair[1]; }
+                }
+                return (false);
+            }
+        },
+        mounted() {
+            var token = this.getQueryVariable("token");
+            if (token == false || token == "") {
+                location.href = "/error/404";
+            }
+            this.token = token;
+        }
+
+    });
+</script>
+
+</html>
