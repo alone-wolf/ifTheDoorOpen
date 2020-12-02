@@ -140,7 +140,7 @@ def r_stage():
     elif tmp is ERR_TAG_UNDEFINED_ERR:
         abort(500)
     else:
-        return render_template("rr_result.html")
+        return render_template("rr_result.html", leader_id=tmp.leader_id, leader_name=tmp.leader_name)
 
 
 @R_routes.route("/rr/admin/api/db/init")
